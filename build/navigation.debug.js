@@ -4,7 +4,7 @@ var document = win.document;
 var location = win.location;
 var history = win.history;
 
-history.replaceState && history.replaceState(true); // 先重置一次state，可以通过history.state来判断手机是否正常支持
+!history.state && history.replaceState && history.replaceState(true); // 先重置一次state，可以通过history.state来判断手机是否正常支持
 
 function Params(args) {
     args = args || '';
@@ -209,7 +209,7 @@ function Navigation(){
 
         function getState() {
             var state;
-            if (useHistoryState && typeof history.state == 'object') {
+            if (useHistoryState && history.state != null && history.state !== true) {
                 state = {
                     id: history.state.id,
                     name: history.state.name,
@@ -239,6 +239,9 @@ function Navigation(){
             } else if (state.id === oldstate.id) {
                 if (that.action === 'replace') {
                     executerQueue.push(new ReplaceExecuter(state));
+                } else {
+                   // 手动改hash的问题 
+                   console.error('请勿用location.hash或location.href来改变hash值');
                 }
             } else {
                 action = 'push';

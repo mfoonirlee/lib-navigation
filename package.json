@@ -1,37 +1,38 @@
 {
-    "name": "lib.navigation",
-    "description": "全局导航",
-    "version": "0.1.0",
-    "homepage": "http://gitlab.alibaba-inc.com/mtb/lib-navigation",
-    "author": ["渚薰"],
-    "repository": {
-        "type": "git",
-        "url": "git@gitlab.alibaba-inc.com:mtb/lib-navigation.git"
-    },
-    "licenses": [
-        {
-            "type": "MIT",
-            "url": "/blob/master/LICENSE-MIT"
-        }
-    ],
-    "engines": {
-        "node": ">= 0.8.0"
-    },
-    "devDependencies": {
-        "grunt": "~0.4.1",
-        "grunt-depconcat": "~0.2.0",
-        "grunt-depcombo": "~0.2.2",
-        "grunt-contrib-copy": "~0.4.1",
-        "grunt-contrib-uglify": "~0.2.0",
-        "grunt-contrib-watch": "~0.4.0",
-        "grunt-contrib-clean": "~0.5.0"
-    },
-    "dependencies": {},
-    "combo": {
-        
-    },
-    "keywords": [
-        "lib",
-        "navigation"
-    ]
+  "name": "lib.navigation",
+  "description": "全局导航",
+  "version": "0.2.0",
+  "homepage": "http://gitlab.alibaba-inc.com/mtb/lib-navigation",
+  "author": [
+    "渚薰"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.alibaba-inc.com:mtb/lib-navigation.git"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-cmdwrap": "^0.1.2",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-contrib-watch": "~0.4.0",
+    "grunt-depcombo": "~0.2.2",
+    "grunt-depconcat": "~0.2.0"
+  },
+  "dependencies": {},
+  "combo": {},
+  "keywords": [
+    "lib",
+    "navigation"
+  ]
 }
