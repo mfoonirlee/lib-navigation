@@ -53,7 +53,6 @@ var requestAnimationFrame = window.requestAnimationFrame ||
 function Navigation(){
     var that = this;
     var executerQueue = [];
-    var queueExecuting = false;
     var useHistoryState = !!history.state;
     var historyStorage = {
         //stack: []
@@ -102,16 +101,10 @@ function Navigation(){
             dispatchWindowEvent('navigation:replace');
         }
     }
-    
-    executerQueue.ensureStart = function(){
-        if(!queueExecuting) {
-            queueExecuting = true;
-            requestAnimationFrame(function() {
-                if (executerQueue.length) {
-                    executerQueue.shift().exec();
-                }
-                requestAnimationFrame(arguments.callee);
-            });
+
+    executerQueue.exec = function() {
+        if (executerQueue.length) {
+            executerQueue.shift().exec();
         }
     }
 
@@ -247,6 +240,7 @@ function Navigation(){
                 action = 'push';
                 executerQueue.push(new PushExecuter(state, state.id - oldstate.id));
             }
+            executerQueue.exec();
         }
 
         var state = getState();
@@ -261,7 +255,7 @@ function Navigation(){
         historyStorage.state = state;
 
         executerQueue.push(new PushExecuter(state));
-        executerQueue.ensureStart();
+        executerQueue.exec();
     }
 }
 
