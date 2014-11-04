@@ -3,16 +3,9 @@
 var document = win.document;
 var location = win.location;
 var history = win.history;
-var ua = win.navigator.userAgent;
-var isIE = ua.match(/MSIE\s*([\d\.]+)/);
-var ieVersion;
-if (!!isIE) {
-    ieVersion = parseInt(isIE[1]);
-}
+var isIEMobile = win.navigator.userAgent.match(/IEMobile\/([\d\.]+)/);
 
-if (!isIE) {
-    !history.state && history.replaceState && history.replaceState(true); // 先重置一次state，可以通过history.state来判断手机是否正常支持    
-}
+!history.state && history.replaceState && history.replaceState(true, null); // 先重置一次state，可以通过history.state来判断手机是否正常支持    
 
 function Params(args) {
     args = args || '';
@@ -72,7 +65,7 @@ function Navigation(){
         a.href = href;
         var e = document.createEvent('HTMLEvents');
         e.initEvent('click', false, true);
-        if (isIE) {
+        if (isIEMobile) {
             // 在IE下需要把元素插入到dom树中才能触发事件
             a.style.cssText = 'display:none;';
             document.body.appendChild(a);    
