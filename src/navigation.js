@@ -3,7 +3,10 @@
 var document = win.document;
 var location = win.location;
 var history = win.history;
-var isIEMobile = win.navigator.userAgent.match(/IEMobile\/([\d\.]+)/);
+var ua = win.navigator.userAgent;
+var Firefox = !!ua.match(/Firefox/i);
+var IEMobile = !!ua.match(/IEMobile/i);
+// var isIEMobile = win.navigator.userAgent.match(/IEMobile\/([\d\.]+)/);
 
 !history.state && history.replaceState && history.replaceState(true, null); // 先重置一次state，可以通过history.state来判断手机是否正常支持    
 
@@ -63,14 +66,27 @@ function Navigation(){
     function dispatchAnchorEvent(href) {
         var a = document.createElement('a');
         a.href = href;
-        var e = document.createEvent('HTMLEvents');
-        e.initEvent('click', false, true);
-        if (isIEMobile) {
-            // 在IE下需要把元素插入到dom树中才能触发事件
-            a.style.cssText = 'display:none;';
-            document.body.appendChild(a);    
+        a.style.cssText = 'display:none;';
+        document.body.appendChild(a);
+
+        var e;
+        if (win['MouseEvent']) {
+            e = new MouseEvent('click', {
+                view: window,
+                bubbles: false,
+                cancelable: false
+            });
+        } else {
+            e = document.createEvent('HTMLEvents');
+            e.initEvent('click', false, false);    
         }
-        a.dispatchEvent(e);
+        
+        if (e) {
+            a.dispatchEvent(e);    
+        } else {
+            location.href = href;
+        }
+        
     }
 
     function dispatchWindowEvent(name, extra) {
